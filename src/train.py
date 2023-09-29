@@ -4,7 +4,7 @@ from sklearn.ensemble import RandomForestClassifier
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.linear_model import LogisticRegression
 
-X, Y = processor('../data/douanesDataset.csv')
+X, Y = processor('data/douanesDataset.csv')
 
 param_grid_rf = [
     {'n_estimators':[10,30]},
