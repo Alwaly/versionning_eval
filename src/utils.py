@@ -2,6 +2,8 @@ import pandas as pd
 import os
 from sklearn.preprocessing import LabelEncoder
 from sklearn.preprocessing import StandardScaler
+from sklearn.model_selection import GridSearchCV
+from sklearn.feature_selection import SequentialFeatureSelector
 
 def csv_reader(file_name):
     directory_name = file_name.split('/')[0]
@@ -47,3 +49,20 @@ def normalisation(X, X_, categorical_features, continuous_features)
     X_ = pd.DataFrame(X_, columns=continuous_features)
     X = pd.concat([X_,X], axis=1, ignore_index=True)
     return X
+
+def gridsearch_dit(models, params,X_train, y_train):
+  model_best=[]
+  accuracy_best=[]
+  for i in range(len(models)):
+    print(f'tour numero: {i}')
+    sfs = SequentialFeatureSelector(estimator=models[i], n_features_to_select = 'auto', scoring='accuracy', direction='backward')
+    sfs.fit(X_train, y_train)
+    selected_feature_indices = sfs.get_support(indices=True)
+    X_train_selected = X_train[:, selected_feature_indices]
+    model=GridSearchCV(models[i], params[i], cv=5)
+    model.fit(X_train_selected, y_train)
+    print(model.best_estimator_)
+    print(model.best_score_)
+    model_best.append(model.best_estimator_)
+    accuracy_best.append(model.best_score_)
+  return model_best, accuracy_best
