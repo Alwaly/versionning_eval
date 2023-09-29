@@ -21,3 +21,15 @@ def process(data):
     Y = df['ILLICIT']
     X = df.drop('ILLICIT', axis=1)
     return X, Y
+
+def feature_engineering(X):
+    continuous_features = X.select_dtypes(include=['float64', 'int64']).columns
+    categorical_features = X.select_dtypes(include=['object']).columns
+
+    df_continuous = X[continuous_features]
+
+    df_categorical = X[categorical_features]
+
+    X_ = X.drop(categorical_features, axis=1)
+    X = X.drop(continuous_features, axis=1)
+    return X, X_
