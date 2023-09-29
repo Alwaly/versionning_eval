@@ -1,0 +1,8 @@
+pandas
+scikit-learn
+seaborn
+pandas_profiling
+pandas
+pickle
+zipfile
+os
