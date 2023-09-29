@@ -1,5 +1,7 @@
 import pandas as pd
 import os
+from sklearn.preprocessing import LabelEncoder
+from sklearn.preprocessing import StandardScaler
 
 def csv_reader(file_name):
     directory_name = file_name.split('/')[0]
@@ -32,4 +34,16 @@ def feature_engineering(X):
 
     X_ = X.drop(categorical_features, axis=1)
     X = X.drop(continuous_features, axis=1)
-    return X, X_
+    return X, X_, categorical_features, continuous_features
+
+def normalisation(X, X_, categorical_features, continuous_features)
+    label_encoder = LabelEncoder()
+
+    for column in categorical_features:
+        X[column] = label_encoder.fit_transform(X[column])
+    
+    X_ = StandardScaler().fit_transform(X_)
+
+    X_ = pd.DataFrame(X_, columns=continuous_features)
+    X = pd.concat([X_,X], axis=1, ignore_index=True)
+    return X
