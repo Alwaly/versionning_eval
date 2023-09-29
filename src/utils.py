@@ -38,7 +38,7 @@ def feature_engineering(X):
     X = X.drop(continuous_features, axis=1)
     return X, X_, categorical_features, continuous_features
 
-def normalisation(X, X_, categorical_features, continuous_features)
+def normalisation(X, X_, categorical_features, continuous_features):
     label_encoder = LabelEncoder()
 
     for column in categorical_features:
